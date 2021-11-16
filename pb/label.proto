@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+import public "pb/item.proto";
+
+package pb;
+option go_package = "../pb";
+
+message Label {
+    string name = 1;
+    repeated pb.Item items = 2;
+}

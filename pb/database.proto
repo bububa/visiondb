@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+import public "pb/shape.proto";
+import public "pb/label.proto";
+
+package pb;
+option go_package = "../pb";
+
+message Database {
+    pb.Shape shape = 1; 
+    repeated pb.Label labels = 2;
+}
