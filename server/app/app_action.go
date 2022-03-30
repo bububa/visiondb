@@ -23,6 +23,6 @@ func afterAction(c *cli.Context) error {
 	return nil
 }
 
-func deferFunc() {
-	service.Close()
+func deferFunc() error {
+	return service.Close()
 }

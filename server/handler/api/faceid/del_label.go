@@ -7,19 +7,19 @@ import (
 	"github.com/bububa/visiondb/server/service"
 )
 
-type AddLabelRequest struct {
-	Name string `json:"name" form:"name" binding:"required"`
+type DelLabelRequest struct {
+	ID *int `json:"id" form:"id" binding:"required"`
 }
 
-func AddLabelHandler(c *gin.Context) {
-	var req AddLabelRequest
+func DelLabelHandler(c *gin.Context) {
+	var req DelLabelRequest
 	if handler.CheckErr(c.ShouldBind(&req), c) {
 		return
 	}
 
-	err := service.FaceIDService().DB.AddLabel(req.Name)
+	err := service.FaceIDService().DB.DeleteLabel(*req.ID)
 	if handler.CheckErr(err, c) {
 		return
 	}
-	handler.Success(c, nil)
+	handler.Success(c, gin.H{"id": *req.ID})
 }

@@ -11,9 +11,13 @@ import (
 func main() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	server, deferFunc := app.NewApp()
-	defer deferFunc()
+	defer func() {
+		if err := deferFunc(); err != nil {
+			log.Fatalln(err)
+		}
+	}()
 	err := server.Run(os.Args)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 	}
 }

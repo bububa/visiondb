@@ -1,0 +1,28 @@
+AppName = "visiondb"
+
+Port = 60606
+
+UI = "./ui/dist"
+
+FontPath = "../openvision/data/font"
+
+[Camera]
+Index = 0
+Width = 640.0
+Height = 480.0
+Delay = 10
+
+[FaceID]
+DetecterModelPath = "../openvision/data/models/fd"
+RecognizerModelPath = "../openvision/data/models/mobilefacenet"
+DatabasePath = "./db/faceid"
+
+[HandPose]
+DetecterModelPath = "../openvision/data/models/mediapipe/palm/full"
+EstimatorModelPath = "../openvision/data/models/mediapipe/hand/full"
+DatabasePath = "./db/handpose"
+
+[HandGuesture]
+DetecterModelPath = "../openvision/data/models/mediapipe/palm/full"
+EstimatorModelPath = "../openvision/data/models/mediapipe/hand/full"
+DatabasePath = "./db/handguesture"

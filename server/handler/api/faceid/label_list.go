@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"github.com/bububa/visiondb/server/handler"
+	"github.com/bububa/visiondb/server/model"
 	"github.com/bububa/visiondb/server/service"
 )
 
@@ -20,7 +21,7 @@ func ListLabelHandler(c *gin.Context) {
 		return
 	}
 
-	labels, err := service.FaceIDService().DB.Labels()
+	labels, counts, err := service.FaceIDService().DB.Labels()
 	if handler.CheckErr(err, c) {
 		return
 	}
@@ -28,11 +29,19 @@ func ListLabelHandler(c *gin.Context) {
 	var pageCount = 1
 	if req.PageSize > 0 {
 		pageCount = int(math.Ceil(float64(total) / float64(req.PageSize)))
-		end := req.Page * req.PageSize
-		if end > total {
-			end = total
-		}
-		labels = labels[(req.Page-1)*req.PageSize : total]
+		// end := req.Page * req.PageSize
+		// if end > total {
+		// 	end = total
+		// }
+		// labels = labels[(req.Page-1)*req.PageSize : total]
 	}
-	handler.Success(c, gin.H{"page_count": pageCount, "list": labels})
+	records := make([]model.Record, total)
+	for idx, v := range labels {
+		records[idx] = model.Record{
+			ID:         idx,
+			Name:       v,
+			ItemsCount: counts[idx],
+		}
+	}
+	handler.Success(c, gin.H{"page_count": pageCount, "list": records})
 }

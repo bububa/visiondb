@@ -6,4 +6,5 @@ option go_package = "../pb";
 message Item {
     repeated float embedding = 1;
     optional bytes raw = 2;
+    string hash = 3;
 }

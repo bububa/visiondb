@@ -12,7 +12,7 @@ var (
 	GitSummary  string // set at compile time with -ldflags
 )
 
-type DeferFunc func()
+type DeferFunc func() error
 
 func NewApp() (*cli.App, DeferFunc) {
 	cli.VersionPrinter = func(c *cli.Context) {

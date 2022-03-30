@@ -9,19 +9,28 @@ const (
 	ErrorCode = -1
 )
 
+type ResultType string
+
+const (
+	SUCCESS ResultType = "success"
+	ERROR   ResultType = "error"
+	WARNING ResultType = "warning"
+)
+
 // Response represents general response
 type Response struct {
 	Code    int         `json:"code"`
-	Message string      `json:"message"`
-	Data    interface{} `json:"data,omitempty"`
+	Message string      `json:"message,omitempty"`
+	Type    ResultType  `json:"type,omitempty"`
+	Result  interface{} `json:"result,omitempty"`
 }
 
 // SuccessResponse success response wrapper
 func SuccessResponse(data interface{}) Response {
 	return Response{
-		Code:    SuccessCode,
-		Message: "success",
-		Data:    data,
+		Code:   SuccessCode,
+		Result: data,
+		Type:   SUCCESS,
 	}
 }
 
@@ -30,5 +39,6 @@ func ErrorResponse(code int, msg string) Response {
 	return Response{
 		Code:    code,
 		Message: msg,
+		Type:    ERROR,
 	}
 }
